@@ -26,8 +26,7 @@ public connector ClientConnector (string username, string token) {
     action getReposOfUser () (http:Response) {
          http:Request request = {};
          string gitPath = "/user/repos";
-         authHeader = "Basic " + authHeader;
-         request.setHeader("Authorization", authHeader);
+         request.setHeader("Authorization", "Basic "+ authHeader);
          http:Response response = gitEP.get(gitPath, request);
          return response;
     }
@@ -42,9 +41,27 @@ public connector ClientConnector (string username, string token) {
     }
     action getReposOfOrg (string orgnization) (http:Response) {
         http:Request request = {};
-        string gitPath =string `/orgs/{{orgnization}}/repos`;
+        string gitPath = string `/orgs/{{orgnization}}/repos`;
         request.setHeader("Authorization", "Basic "+ authHeader);
         http:Response response = gitEP.get(gitPath, request);
         return response;
     }
+
+    @doc:Description {
+        value:"List all issues under a given repository"
+    }
+    @doc:Param {
+        value:"organization: name of the orgnization on which issues should be fetched"
+    }
+    @doc:Return {
+        value:"Response object"
+    }
+    action getIssuesOfRepoByState (string orgnization, string repository, string state) (http:Response) {
+        http:Request request = {};
+        string gitPath = string `/repos/{{orgnization}}/{{repository}}/issues?state={{state}}`;
+        request.setHeader("Authorization", "Basic "+ authHeader);
+        http:Response response = gitEP.get(gitPath, request);
+        return response;
+    }
+
 }
