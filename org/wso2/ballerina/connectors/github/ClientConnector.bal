@@ -1,25 +1,24 @@
 package org.wso2.ballerina.connectors.github;
 
 import ballerina.net.http;
-import ballerina.doc;
-import ballerina.lang.system;
-@doc:Description {
+
+@Description {
     value:"GitHub Client Connector"
 }
-@doc:Param {
+@Param {
     value:"username: github username"
 }
-@doc:Param {
+@Param {
     value:"token: github personal token"
 }
 public connector ClientConnector (string username, string token) {
     http:ClientConnector gitEP = create http:ClientConnector("https://api.github.com", {});
 
     string authHeader = getBase64EncodedKey(username, token);
-    @doc:Description {
+    @Description {
         value:"Retrieve repositories for the authenticated user"
     }
-    @doc:Return {
+    @Return {
         value:"Response object"
     }
     
@@ -30,13 +29,13 @@ public connector ClientConnector (string username, string token) {
          http:Response response = gitEP.get(gitPath, request);
          return response;
     }
-    @doc:Description {
+    @Description {
         value:"List repositories for an organization"
     }
-    @doc:Param {
+    @Param {
         value:"organization: name of the orgnization on which repositories should be fetched"
     }
-    @doc:Return {
+    @Return {
         value:"Response object"
     }
     action getReposOfOrg (string orgnization) (http:Response) {
@@ -47,13 +46,13 @@ public connector ClientConnector (string username, string token) {
         return response;
     }
 
-    @doc:Description {
+    @Description {
         value:"List all issues under a given repository"
     }
-    @doc:Param {
+    @Param {
         value:"organization: name of the orgnization on which issues should be fetched"
     }
-    @doc:Return {
+    @Return {
         value:"Response object"
     }
     action getIssuesOfRepoByState (string orgnization, string repository, string state) (http:Response) {

@@ -2,8 +2,7 @@ package com.test.sample;
 
 import org.wso2.ballerina.connectors.github;
 import ballerina.net.http;
-import ballerina.utils;
-import ballerina.lang.system;
+import ballerina.util;
 
 @http:configuration {
     basePath:"/integrate"
