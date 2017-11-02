@@ -13,10 +13,12 @@ service<http> service1 {
         path:"/get/repo/{org}"
     }
     resource getReposForOrganization (http:Request req,http:Response res, string org) {
-        github:ClientConnector gitHubConnector;
+        endpoint<github:ClientConnector> gitHubConnector{
+        }
         string username = req.getHeader("Username");
         string tokenEnc = req.getHeader("Token");
-        gitHubConnector = create github:ClientConnector(username, tokenEnc);
+        github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
+        bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
         gitHubResponse = gitHubConnector.getReposOfOrg(org);
         res.forward(gitHubResponse);
@@ -27,10 +29,12 @@ service<http> service1 {
         path:"/get/issues/{org}/{repo}/{state}"
     }
     resource getIssuesPerRepoPerState (http:Request req,http:Response res, string org, string repo, string state) {
-        github:ClientConnector gitHubConnector;
+        endpoint<github:ClientConnector> gitHubConnector{
+        }
         string username = req.getHeader("Username");
         string tokenEnc = req.getHeader("Token");
-        gitHubConnector = create github:ClientConnector(username, tokenEnc);
+        github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
+        bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
         gitHubResponse = gitHubConnector.getIssuesOfRepoByState(org, repo, state);
         res.forward(gitHubResponse);
@@ -41,10 +45,12 @@ service<http> service1 {
         path:"/get/repo/authuser"
     }
     resource getReposOfAuthUser (http:Request req,http:Response res) {
-        github:ClientConnector gitHubConnector;
+        endpoint<github:ClientConnector> gitHubConnector{
+        }
         string username = req.getHeader("Username");
         string tokenEnc = req.getHeader("Token");
-        gitHubConnector = create github:ClientConnector(username, tokenEnc);
+        github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
+        bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
         gitHubResponse = gitHubConnector.getReposOfUser();
         res.forward(gitHubResponse);

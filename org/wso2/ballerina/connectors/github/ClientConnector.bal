@@ -12,7 +12,7 @@ import ballerina.net.http;
     value:"token: github personal token"
 }
 public connector ClientConnector (string username, string token) {
-    http:ClientConnector gitEP = create http:ClientConnector("https://api.github.com", {});
+    endpoint<http:ClientConnector> gitEP { create http:ClientConnector("https://api.github.com", {});}
 
     string authHeader = getBase64EncodedKey(username, token);
     @Description {
