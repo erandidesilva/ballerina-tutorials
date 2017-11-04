@@ -20,7 +20,7 @@ service<http> service1 {
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
-        gitHubResponse = gitHubConnector.getReposOfOrg(org);
+        gitHubResponse, _ = gitHubConnector.getReposOfOrg(org);
         res.forward(gitHubResponse);
     }
 
@@ -36,7 +36,7 @@ service<http> service1 {
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
-        gitHubResponse = gitHubConnector.getIssuesOfRepoByState(org, repo, state);
+        gitHubResponse, _ = gitHubConnector.getIssuesOfRepoByState(org, repo, state);
         res.forward(gitHubResponse);
     }
 
@@ -52,7 +52,7 @@ service<http> service1 {
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
-        gitHubResponse = gitHubConnector.getReposOfUser();
+        gitHubResponse, _ = gitHubConnector.getReposOfUser();
         res.forward(gitHubResponse);
     }
 }

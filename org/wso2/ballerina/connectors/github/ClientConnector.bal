@@ -22,12 +22,14 @@ public connector ClientConnector (string username, string token) {
         value:"Response object"
     }
     
-    action getReposOfUser () (http:Response) {
+    action getReposOfUser () (http:Response, http:HttpConnectorError) {
          http:Request request = {};
          string gitPath = "/user/repos";
          request.setHeader("Authorization", "Basic "+ authHeader);
-         http:Response response = gitEP.get(gitPath, request);
-         return response;
+         http:Response response = {};
+         http:HttpConnectorError err;
+         response, err = gitEP.get(gitPath, request);
+         return response, err;
     }
     @Description {
         value:"List repositories for an organization"
@@ -38,12 +40,14 @@ public connector ClientConnector (string username, string token) {
     @Return {
         value:"Response object"
     }
-    action getReposOfOrg (string orgnization) (http:Response) {
+    action getReposOfOrg (string orgnization) (http:Response, http:HttpConnectorError) {
         http:Request request = {};
         string gitPath = string `/orgs/{{orgnization}}/repos`;
         request.setHeader("Authorization", "Basic "+ authHeader);
-        http:Response response = gitEP.get(gitPath, request);
-        return response;
+        http:Response response = {};
+        http:HttpConnectorError err;
+        response, err = gitEP.get(gitPath, request);
+        return response, err;
     }
 
     @Description {
@@ -55,12 +59,14 @@ public connector ClientConnector (string username, string token) {
     @Return {
         value:"Response object"
     }
-    action getIssuesOfRepoByState (string orgnization, string repository, string state) (http:Response) {
+    action getIssuesOfRepoByState (string orgnization, string repository, string state) (http:Response, http:HttpConnectorError) {
         http:Request request = {};
         string gitPath = string `/repos/{{orgnization}}/{{repository}}/issues?state={{state}}`;
         request.setHeader("Authorization", "Basic "+ authHeader);
-        http:Response response = gitEP.get(gitPath, request);
-        return response;
+        http:Response response = {};
+        http:HttpConnectorError err;
+        response, err = gitEP.get(gitPath, request);
+        return response, err;
     }
 
 }
