@@ -15,8 +15,10 @@ service<http> service1 {
     resource getReposForOrganization (http:Request req,http:Response res, string org) {
         endpoint<github:ClientConnector> gitHubConnector{
         }
-        string username = req.getHeader("Username");
-        string tokenEnc = req.getHeader("Token");
+        string username;
+        string tokenEnc;
+        username, _ = req.getHeader("Username");
+        tokenEnc, _ = req.getHeader("Token");
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
@@ -31,8 +33,10 @@ service<http> service1 {
     resource getIssuesPerRepoPerState (http:Request req,http:Response res, string org, string repo, string state) {
         endpoint<github:ClientConnector> gitHubConnector{
         }
-        string username = req.getHeader("Username");
-        string tokenEnc = req.getHeader("Token");
+        string username;
+        string tokenEnc;
+        username, _ = req.getHeader("Username");
+        tokenEnc, _ = req.getHeader("Token");
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
@@ -47,8 +51,10 @@ service<http> service1 {
     resource getReposOfAuthUser (http:Request req,http:Response res) {
         endpoint<github:ClientConnector> gitHubConnector{
         }
-        string username = req.getHeader("Username");
-        string tokenEnc = req.getHeader("Token");
+        string username;
+        string tokenEnc;
+        username, _ = req.getHeader("Username");
+        tokenEnc, _ = req.getHeader("Token");
         github:ClientConnector gitHubConn = create github:ClientConnector(username, tokenEnc);
         bind gitHubConn with gitHubConnector;
         http:Response gitHubResponse = {};
